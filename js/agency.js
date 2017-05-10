@@ -20,10 +20,14 @@
 
     // prevent jump on hashchange event
     $(window).bind('hashchange', function(event) {
-        event.preventDefault();
+        if(autoscroll){
+            event.preventDefault();
+        }
     });
     $(window).on('hashchange', function(event) {
-        event.preventDefault();
+        if(autoscroll){
+            event.preventDefault();
+        }
     });
 
     // detect direction user is scrolling -- WAAAAAY TOO EXPENSIVE
