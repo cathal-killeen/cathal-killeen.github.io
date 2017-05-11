@@ -56,6 +56,13 @@ h6 {
     border: 7px solid white;
 }
 
+.img-project {
+    height:220px;
+    width:100%;
+    background-position:center center;
+    background-size: cover;
+}
+
 .bg-light-gray {
   background-color: #eeeeee;
 }
