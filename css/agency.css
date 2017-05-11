@@ -49,6 +49,13 @@ h6 {
 .img-centered {
   margin: 0 auto;
 }
+.img-heading {
+    width:20%;
+    height:20%;
+    margin: 0 auto;
+    border: 7px solid white;
+}
+
 .bg-light-gray {
   background-color: #eeeeee;
 }
@@ -646,6 +653,11 @@ ul.social-buttons li a {
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
+}
+ul.header-social li a {
+    border: 2px solid white;
+    height: 44px;
+    width: 44px;
 }
 ul.social-buttons li a:hover,
 ul.social-buttons li a:focus,
