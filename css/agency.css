@@ -3,6 +3,14 @@
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
+
+ #loading-bar .bar {
+ background: #FED136;
+ height: 10px;
+ }
+
+
+
 body {
   overflow-x: hidden;
   font-family: "Roboto Slab", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -233,10 +241,10 @@ fieldset[disabled] .btn-xl.active {
 @media (min-width: 768px) {
   .navbar-custom.affix {
     background-color: #222222;
-    padding: 10px 0;
+    /*padding: 10px 0;*/
   }
   .navbar-custom.affix .navbar-brand {
-    font-size: 1.5em;
+    /*font-size: 1.5em;*/
   }
 }
 header {

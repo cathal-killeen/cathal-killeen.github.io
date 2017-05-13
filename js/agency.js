@@ -8,13 +8,16 @@
     //jQuery for page scrolling feature - requires jQuery Easing plugin
     $('a.page-scroll').bind('click', function(event) {
         event.preventDefault();
-        autoscroll = true;
+        //autoscroll = true;
         var $anchor = $(this);
         $('html, body').stop().animate({
             scrollTop: ($($anchor.attr('href')).offset().top - 50)
         }, 1250, 'easeInOutExpo', function(){
             window.location.hash = $anchor.attr('href');
-            autoscroll = false;
+            setTimeout(function(){
+                autoscroll = false;
+            }, 0);
+
         });
     });
 
@@ -73,7 +76,7 @@
     // Offset for Main Navigation
     $('#mainNav').affix({
         offset: {
-            top: 100
+            top: 120
         }
     })
 
