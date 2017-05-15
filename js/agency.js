@@ -6,32 +6,32 @@
     var autoscroll = false;
 
     //jQuery for page scrolling feature - requires jQuery Easing plugin
-    $('a.page-scroll').bind('click', function(event) {
-        event.preventDefault();
-        //autoscroll = true;
-        var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: ($($anchor.attr('href')).offset().top - 50)
-        }, 1250, 'easeInOutExpo', function(){
-            window.location.hash = $anchor.attr('href');
-            setTimeout(function(){
-                autoscroll = false;
-            }, 0);
-
-        });
-    });
+    // $('a.page-scroll').bind('click', function(event) {
+    //     event.preventDefault();
+    //     //autoscroll = true;
+    //     var $anchor = $(this);
+    //     $('html, body').stop().animate({
+    //         scrollTop: ($($anchor.attr('href')).offset().top)
+    //     }, 1250, 'easeInOutExpo', function(){
+    //         window.location.hash = $anchor.attr('href');
+    //         setTimeout(function(){
+    //             autoscroll = false;
+    //         }, 0);
+    //
+    //     });
+    // });
 
     // prevent jump on hashchange event
-    $(window).bind('hashchange', function(event) {
-        if(autoscroll){
-            event.preventDefault();
-        }
-    });
-    $(window).on('hashchange', function(event) {
-        if(autoscroll){
-            event.preventDefault();
-        }
-    });
+    // $(window).bind('hashchange', function(event) {
+    //     //if(autoscroll){
+    //         event.preventDefault();
+    //     //}
+    // });
+    // $(window).on('hashchange', function(event) {
+    //     if(autoscroll){
+    //         event.preventDefault();
+    //     }
+    // });
 
     // detect direction user is scrolling -- WAAAAAY TOO EXPENSIVE
     // $(window).bind('mousewheel', function(event) {
