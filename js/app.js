@@ -21,6 +21,18 @@ angular.module('app', [
 })
 .value('duScrollDuration', 600)
 .value('duScrollOffset', 50)
+.run(function($rootScope) {
+    if(!window.history || !history.replaceState) {
+      return;
+    }
+    $rootScope.$on('duScrollspy:becameActive', function($event, $element, $target){
+      //Automaticly update location
+      var hash = $element.prop('hash');
+      if (hash) {
+        history.replaceState(null, null, hash);
+      }
+    });
+})
 .controller('MainCtrl', [
     '$scope',
     '$http',
@@ -28,6 +40,23 @@ angular.module('app', [
     '$anchorScroll',
     '$interval',
     function($scope, $http, $location, $anchorScroll, $interval) {
+        $('body').scrollspy({
+            target: '.navbar-fixed-top',
+            offset: 51
+        });
+
+        // Closes the Responsive Menu on Menu Item Click
+        $('.navbar-collapse ul li a').click(function(){
+                $('.navbar-toggle:visible').click();
+        });
+
+        // Offset for Main Navigation
+        $('#mainNav').affix({
+            offset: {
+                top: 120
+            }
+        })
+
         angular.element("#img-heading").animate("tada");
 
         $scope.scrollTo = function(hash) {
