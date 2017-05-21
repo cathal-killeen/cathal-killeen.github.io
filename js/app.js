@@ -49,7 +49,8 @@ var experience = [
 angular.module('app', [
     'ngRoute',
     'ngAnimate',
-    'duScroll'
+    'duScroll',
+    'ui.router'
 ])
 .config(function($locationProvider, $routeProvider) {
 
@@ -61,77 +62,161 @@ angular.module('app', [
         controller: 'MainCtrl'
     })
     .when("/projects", {
-        templateUrl : "templates/projects.html"
-    });
+        templateUrl : "templates/projects.html",
+        controller: 'ProjectsCtrl'
+    })
+    .when("/projects/:id", {
+        templateUrl: "templates/projects.html",
+        controller: 'ProjectsCtrl'
+    })
 })
 .value('duScrollDuration', 600)
 .value('duScrollOffset', 50)
 .run(function($rootScope) {
     if(!window.history || !history.replaceState) {
-      return;
+        return;
     }
     $rootScope.$on('duScrollspy:becameActive', function($event, $element, $target){
-      //Automaticly update location
-      var hash = $element.prop('hash');
-      if (hash) {
-        history.replaceState(null, null, hash);
-      }
+        //Automaticly update location
+        var hash = $element.prop('hash');
+        if (hash) {
+            history.replaceState(null, null, hash);
+        }
     });
 })
-.controller('MainCtrl', [
-    '$scope',
+.factory('Wordpress', [
+    '$rootScope',
     '$http',
-    '$location',
-    '$anchorScroll',
-    '$interval',
-    function($scope, $http, $location, $anchorScroll, $interval) {
-        $scope.experience = experience;
+    function($rootScope, $http) {
 
-        // $('body').scrollspy({
-        //     target: '.navbar-fixed-top',
-        //     offset: 51
-        // });
-        //
-        // // Closes the Responsive Menu on Menu Item Click
-        // $('.navbar-collapse ul li a').click(function(){
-        //         $('.navbar-toggle:visible').click();
-        // });
-        //
-        // // Offset for Main Navigation
-        // $('#mainNav').affix({
-        //     offset: {
-        //         top: 120
-        //     }
-        // })
+        // Private methods.
+        function get() {
+            return new Promise(function(resolve, reject) {
+                $http.get(API_ENTRY + '/posts').then(function(response){
+                    $rootScope.siteData = response.data;
+                    resolve(response.data);
+                });
+            });
+        }
 
-        angular.element("#img-heading").animate("tada");
+        function findProjects(posts) {
+            return new Promise(function(resolve, reject) {
+                var projects = [];
+                posts.forEach(function(post){
+                    if(post.categories.hasOwnProperty('Projects')){
+                        var cats = Object.keys(post.categories);
+                        cats.splice(cats.indexOf('Projects'));
+                        post.project_type = cats[0];
+                        projects.push(post);
+                    }
+                });
+                $rootScope.projects = projects;
+                $rootScope.home_projects = projects.slice(0,6);
 
-        $scope.scrollTo = function(hash) {
-            // set the location.hash to the id of
-            // the element you wish to scroll to.
-            $location.hash(hash);
+                resolve(projects);
+            });
+        }
 
-            // call $anchorScroll()
-            $anchorScroll();
-        };
-
-        $http.get(API_ENTRY + '/posts').then(function(response){
-            console.log(response);
-            $scope.projects = [];
-            response.data.posts.forEach(function(post){
-                if(post.categories.hasOwnProperty('Projects')){
-                    var cats = Object.keys(post.categories);
-                    cats.splice(cats.indexOf('Projects'));
-                    post.project_type = cats[0];
-                    $scope.projects.push(post);
+        function getProjects(){
+            return new Promise(function(resolve, reject) {
+                if($rootScope.siteData){
+                    if($rootScope.projects){
+                        var projects = $rootScope.projects;
+                        resolve(projects);
+                    }else{
+                        findProjects($rootScope.siteData.posts).then(function(projects){
+                            resolve(projects);
+                        });
+                    }
+                }
+                else{
+                    get().then(function(data){
+                        findProjects(data.posts).then(function(projects){
+                            resolve(projects);
+                        });
+                    })
                 }
             });
-            $scope.home_projects = $scope.projects.slice(0,6);
+        }
 
+        // public API
+        return {
+            getProjects: getProjects,
+            getHomeProjects: () => {
+                return new Promise(function(resolve, reject) {
+                    getProjects().then(function(projects){
+                        homeProjects = projects.slice(0,6);
+                        resolve(homeProjects);
+                    })
+                });
+            },
+            getBySlug: (slug) => {
+                return new Promise(function(resolve, reject) {
+                    getProjects().then(function(projects){
+                        projects.forEach(function(project){
+                            if(project.slug == slug){
+                                resolve(project);
+                            }
+                        })
+                        reject();
+                    })
 
-            console.log($scope.projects);
-        })
+                });
+            }
+        };
+    }])
 
+    .controller('MainCtrl', [
+        '$scope',
+        '$http',
+        '$location',
+        '$anchorScroll',
+        '$interval',
+        'Wordpress',
+        function($scope, $http, $location, $anchorScroll, $interval, Wordpress) {
+            $scope.experience = experience;
+
+            angular.element("#img-heading").animate("tada");
+
+            Wordpress.getHomeProjects().then(function(home_projects){
+
+                $scope.home_projects = home_projects;
+                console.log($scope.home_projects);
+                $scope.$apply();
+            });
+
+}])
+.controller('ProjectsCtrl', [
+    '$scope',
+    '$location',
+    '$anchorScroll',
+    'Wordpress',
+    '$routeParams',
+    '$sce',
+    '$state',
+    function($scope, $location, $anchorScroll, Wordpress, $routeParams, $sce, $state) {
+        if($routeParams.id){
+            console.log("id: " + $routeParams.id);
+            $scope.individual = true;
+            Wordpress.getBySlug($routeParams.id).then(function(project){
+                $scope.project = project;
+                console.log($scope.project);
+                $scope.content = $sce.trustAsHtml(project.content);
+                $scope.$apply();
+            });
+        }else{
+            $scope.individual = false;
+            Wordpress.getProjects().then(function(projects){
+                $scope.projects = projects;
+                console.log($scope.projects);
+                $scope.$apply();
+            })
+        }
+
+        $scope.openProject = function (id) {
+            console.log("opening: " + id);
+            $state.go('projects', {'id': id});
+        }
 
 
     }]);

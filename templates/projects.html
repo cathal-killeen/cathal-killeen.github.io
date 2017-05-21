@@ -1,3 +1,56 @@
-<h1>PROJECTS PAGE</h1>
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <a class="navbar-brand page-scroll" href="/" du-smooth-scroll du-scrollspy>Cathal Killeen</a>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</nav>
 
-<iframe src="https://open.spotify.com/embed/user/cathalkilleen/playlist/2AGlGiOThkElhGg4wyZI2Q" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+
+<!-- Project Grid Section -->
+<section id="projects" class="bg-light-gray" ng-hide="individual">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Projects</h2>
+                <h3 class="section-subheading text-muted">Software projects that I have worked on, including personal, college and client projects.</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-sm-6 projects-item" ng-repeat="project in projects">
+                <a ng-href"/projects/{{project.slug}}" class="projects-link" data-toggle="modal">
+                    <div class="projects-hover">
+                        <div class="projects-hover-content">
+                            <i class="fa fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    <div class="img-project" ng-style="{'background-image':'url({{project.featured_image}})'}"></div>
+                </a>
+                <div class="projects-caption">
+                    <h5>{{project.title}}</h5>
+                    <p class="text-muted">{{project.project_type}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects" ng-show="individual">
+    <div class="container">
+        <div class="row">
+            <a href="/projects"><h4><i class="fa fa-hand-o-left"></i>  Back to Projects</h4></a>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">{{project.title}}</h2>
+                <h3 class="section-subheading text-muted">{{project.date}}</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-bind-html="content" class="post-content"></div>
+        </div>
+    </div>
+</section>
