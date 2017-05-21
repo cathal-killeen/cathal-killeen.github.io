@@ -25,7 +25,7 @@
                 <a href ng-click="openProject(project.slug)" class="projects-link">
                     <div class="projects-hover">
                         <div class="projects-hover-content">
-                            <i class="fa fa-plus fa-3x"></i>
+                            <i class="fa fa-arrows-alt fa-3x"></i>
                         </div>
                     </div>
                     <div class="img-project" ng-style="{'background-image':'url({{project.featured_image}})'}"></div>
@@ -47,7 +47,13 @@
         <div class="row">
             <div class="col-lg-12 text-center" style="margin-top:45px;">
                 <h2 class="section-heading">{{project.title}}</h2>
-                <h3 class="section-subheading text-muted">{{project.date}}</h3>
+                <h3 class="section-subheading text-muted" style="margin-bottom:20px;">{{project.date}}</h3>
+            </div>
+        </div>
+        <div class="row" style="margin: 20px 0 40px 0;">
+            <div class="col-lg-12 text-center">
+                <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.demo}}" ng-show="project.demo_links.demo" target="_blank"><i class="fa fa-desktop" style="margin-right:8px;"></i>Live Demo</a>
+                <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.repo}}" ng-show="project.demo_links.repo" target="_blank" style="background-color:#3F4448;border-color:#3F4448;"><i class="fa fa-github" style="margin-right:8px;font-size:120%"></i>GitHub Repo</a>
             </div>
         </div>
         <div class="row">

@@ -42,7 +42,7 @@ var experience = [
         description: "During the 2016/17 academic year, I did a study abroad exchange at the University of Colorado Boulder in the USA. Living in Boulder allowed me to travel to many different hackathons across the USA, and visit various tech centers around the country. I also experienced a different academic culture, and was able to take some Computer Science classes that were not available at UCD.",
         image_url: "/img/experience/boulder.jpg"
     }
-]
+];
 
 
 // Declare app level module which depends on views, and components
@@ -98,9 +98,21 @@ angular.module('app', [
                 var projects = [];
                 posts.forEach(function(post){
                     if(post.categories.hasOwnProperty('Projects')){
+                        //get sub categories
                         var cats = Object.keys(post.categories);
                         cats.splice(cats.indexOf('Projects'));
                         post.project_type = cats[0];
+
+                        // parse json from excerpt
+                        var stripped = post.excerpt.replace(/<(?:.|\n)*?>/gm, '').replace(/\&#038;/gm, '&').replace(/\&#\d{4};/gm, '"');
+                        console.log(stripped);
+                        // check if excerpt is in json format
+                        if(stripped[0] === '{'){
+                            var obj = angular.fromJson(stripped);
+                            console.log(obj);
+                            post.demo_links = obj;
+                        }
+
                         projects.push(post);
                     }
                 });
@@ -215,6 +227,5 @@ angular.module('app', [
             console.log("opening: " + id);
             $location.path('/projects/'+id, false);
         }
-
 
     }]);
