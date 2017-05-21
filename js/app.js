@@ -76,13 +76,7 @@ angular.module('app', [
     if(!window.history || !history.replaceState) {
         return;
     }
-    $rootScope.$on('duScrollspy:becameActive', function($event, $element, $target){
-        //Automaticly update location
-        var hash = $element.prop('hash');
-        if (hash) {
-            history.replaceState(null, null, hash);
-        }
-    });
+
 })
 .factory('Wordpress', [
     '$rootScope',
@@ -185,6 +179,11 @@ angular.module('app', [
                 $scope.$apply();
             });
 
+            $scope.openProject = function(id) {
+                console.log("opening: " + id);
+                $location.path('/projects/'+id, false);
+            }
+
 }])
 .controller('ProjectsCtrl', [
     '$scope',
@@ -196,7 +195,6 @@ angular.module('app', [
     '$state',
     function($scope, $location, $anchorScroll, Wordpress, $routeParams, $sce, $state) {
         if($routeParams.id){
-            console.log("id: " + $routeParams.id);
             $scope.individual = true;
             Wordpress.getBySlug($routeParams.id).then(function(project){
                 $scope.project = project;
@@ -213,9 +211,9 @@ angular.module('app', [
             })
         }
 
-        $scope.openProject = function (id) {
+        $scope.openProject = function(id) {
             console.log("opening: " + id);
-            $state.go('projects', {'id': id});
+            $location.path('/projects/'+id, false);
         }
 
 

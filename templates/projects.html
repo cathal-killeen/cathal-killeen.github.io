@@ -11,8 +11,9 @@
 
 
 <!-- Project Grid Section -->
-<section id="projects" class="bg-light-gray" ng-hide="individual">
+<section id="projects" class="bg-light-gray" ng-hide="individual" style="margin: 50px 0 0 0;">
     <div class="container">
+
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">Projects</h2>
@@ -21,7 +22,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 col-sm-6 projects-item" ng-repeat="project in projects">
-                <a ng-href"/projects/{{project.slug}}" class="projects-link" data-toggle="modal">
+                <a href ng-click="openProject(project.slug)" class="projects-link">
                     <div class="projects-hover">
                         <div class="projects-hover-content">
                             <i class="fa fa-plus fa-3x"></i>
@@ -44,13 +45,20 @@
             <a href="/projects"><h4><i class="fa fa-hand-o-left"></i>  Back to Projects</h4></a>
         </div>
         <div class="row">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12 text-center" style="margin-top:45px;">
                 <h2 class="section-heading">{{project.title}}</h2>
                 <h3 class="section-subheading text-muted">{{project.date}}</h3>
             </div>
         </div>
         <div class="row">
-            <div ng-bind-html="content" class="post-content"></div>
+            <div class="col-md-10 col-md-offset-1">
+                <img id="post-featured-image" ng-src="{{project.featured_image}}" alt="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div ng-bind-html="content" class="post-content"></div>
+            </div>
         </div>
     </div>
 </section>
