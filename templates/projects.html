@@ -11,7 +11,7 @@
 
 
 <!-- Project Grid Section -->
-<section id="projects" class="bg-light-gray" ng-hide="individual" style="margin: 50px 0 0 0;">
+<section id="projects" ng-hide="individual" style="margin: 50px 0 0 0;">
     <div class="container">
 
         <div class="row">
@@ -30,9 +30,9 @@
                     </div>
                     <div class="img-project" ng-style="{'background-image':'url({{project.featured_image}})'}"></div>
                 </a>
-                <div class="projects-caption">
+                <div class="projects-caption" style="background-color:#EEEEEE;">
                     <h5>{{project.title}}</h5>
-                    <p class="text-muted">{{project.project_type}}</p>
+                    <!-- <p class="text-muted">{{project.project_type}}</p> -->
                 </div>
             </div>
         </div>
@@ -42,7 +42,9 @@
 <section id="projects" ng-show="individual">
     <div class="container">
         <div class="row">
-            <a href="/projects"><h4><i class="fa fa-hand-o-left"></i>  Back to Projects</h4></a>
+            <div class="col-lg-12" >
+                <a href="/projects"><h4><i class="fa fa-hand-o-left"></i>  Back to Projects</h4></a>
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-12 text-center" style="margin-top:45px;">
@@ -53,7 +55,9 @@
         <div class="row" style="margin: 20px 0 40px 0;">
             <div class="col-lg-12 text-center">
                 <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.demo}}" ng-show="project.demo_links.demo" target="_blank"><i class="fa fa-desktop" style="margin-right:8px;"></i>Live Demo</a>
+                <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.site}}" ng-show="project.demo_links.site" target="_blank" style="background-color:#4527a0;border-color:#4527a0;"><i class="fa fa-desktop" style="margin-right:8px;"></i>View Site</a>
                 <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.repo}}" ng-show="project.demo_links.repo" target="_blank" style="background-color:#3F4448;border-color:#3F4448;"><i class="fa fa-github" style="margin-right:8px;font-size:120%"></i>GitHub Repo</a>
+                <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.devpost}}" ng-show="project.demo_links.devpost" target="_blank" style="background-color:#003E54;border-color:#003E54;"><i class="fa fa-trophy" style="margin-right:8px;font-size:120%"></i>Devpost</a>
             </div>
         </div>
         <div class="row">

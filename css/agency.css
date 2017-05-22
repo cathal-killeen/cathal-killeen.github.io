@@ -145,7 +145,7 @@ fieldset[disabled] .btn-primary.active {
 
 .btn-xl.btn-demo{
     padding: 15px 25px;
-    margin: 0 10px 0 10px;
+    margin: 10px;
     font-size: 15px;
 }
 .btn-xl:hover,
@@ -391,6 +391,7 @@ section h3.section-subheading {
   background-color: white;
   text-align: center;
   padding: 25px;
+  min-height:100px;
 }
 #projects .projects-item .projects-caption h4 {
   text-transform: none;
