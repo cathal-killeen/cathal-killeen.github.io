@@ -4,6 +4,19 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+ .blog-preview.row {
+   display: -webkit-box;
+   display: -webkit-flex;
+   display: -ms-flexbox;
+   display:         flex;
+   flex-wrap: wrap;
+ }
+ .blog-preview.row > [class*='col-'] {
+   display: flex;
+   flex-direction: column;
+ }
+
+
  #loading-bar .bar {
  background: #FED136;
  height: 10px;
