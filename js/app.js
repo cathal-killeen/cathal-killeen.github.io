@@ -100,6 +100,14 @@ angular.module('app', [
         templateUrl: "templates/projects.html",
         controller: 'ProjectsCtrl'
     })
+    .when("/blog", {
+        templateUrl : "templates/blog.html",
+        controller: 'BlogCtrl'
+    })
+    .when("/blog/:id", {
+        templateUrl: "templates/blog.html",
+        controller: 'BlogCtrl'
+    })
 })
 .value('duScrollDuration', 600)
 .value('duScrollOffset', 50)
@@ -117,7 +125,6 @@ angular.module('app', [
             social.forEach(network => {
                 if(network.name === this.name){
                     this.info = network;
-                    console.log(this.info);
                 }
             })
         }
@@ -158,7 +165,6 @@ angular.module('app', [
 
                     // parse json from excerpt
                     var stripped = post.excerpt.replace(/<(?:.|\n)*?>/gm, '').replace(/\&#038;/gm, '&').replace(/\&#\d{4};/gm, '"');
-                    console.log(stripped);
                     // check if excerpt is in json format
                     if(stripped[0] === '{'){
                         var obj = angular.fromJson(stripped);
@@ -187,6 +193,7 @@ angular.module('app', [
                     var blogPosts = [];
                     data.posts.forEach(function(post){
                         if(post.categories.hasOwnProperty('Blog')){
+                            post.sample = $sce.trustAsHtml(post.excerpt);
                             blogPosts.push(post);
                         }
                     });
@@ -243,7 +250,19 @@ angular.module('app', [
                     })
                     reject();
                 })
-
+            });
+        },
+        getPost: (slug) => {
+            return new Promise(function(resolve, reject) {
+                getBlogPosts().then(posts => {
+                    console.log(posts);
+                    posts.forEach(post => {
+                        if(post.slug == slug){
+                            resolve(post);
+                        }
+                    })
+                    reject();
+                })
             });
         }
     };
@@ -260,6 +279,34 @@ angular.module('app', [
 function($scope, $http, $location, $anchorScroll, $interval, Wordpress, $sce) {
     $scope.experience = experience;
 
+    $scope.sent = false;
+    $scope.error = "";
+
+    $scope.contact = {
+        name: "",
+        email: "",
+        message: ""
+    }
+
+    var validateMessage = function(){
+        if($scope.contact.name.length > 0){
+            if($scope.contact.email.length > 0){
+                if($scope.contact.message.length > 0){
+                    return true;
+                }else{
+                    $scope.error = "Please enter a message.";
+                    return false;
+                }
+            }else{
+                $scope.error = "Please enter an email.";
+                return false;
+            }
+        }else{
+            $scope.error = "Please enter a name.";
+            return false;
+        }
+    }
+
     angular.element("#img-heading").animate("tada");
 
     Wordpress.getHomeProjects().then(function(home_projects){
@@ -270,9 +317,6 @@ function($scope, $http, $location, $anchorScroll, $interval, Wordpress, $sce) {
 
     Wordpress.getBlogPosts().then(posts => {
         $scope.blogPosts = posts.slice(0,3);
-        $scope.blogPosts.forEach(post => {
-            post.sample = $sce.trustAsHtml(post.excerpt);
-        });
         console.log($scope.blogPosts);
         $scope.$apply();
     })
@@ -280,6 +324,28 @@ function($scope, $http, $location, $anchorScroll, $interval, Wordpress, $sce) {
     $scope.openProject = function(id) {
         console.log("opening: " + id);
         $location.path('/projects/'+id, false);
+    }
+
+    $scope.sendMessage = function() {
+        if(validateMessage()){
+            $http({
+                url: "http://formspree.io/" + "cathalkilleen+website" + "@" + "gmail" + "." + "com",
+                data: $.param(
+                    $scope.contact
+                ),
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(function(response){
+                if(response.status == 200){
+                    $scope.error = "";
+                    $scope.sent = true;
+                }
+                console.log(response);
+            })
+        }
     }
 
 }])
@@ -314,4 +380,38 @@ function($scope, $http, $location, $anchorScroll, $interval, Wordpress, $sce) {
             $location.path('/projects/'+id, false);
         }
 
+    }])
+
+.controller('BlogCtrl', [
+    '$scope',
+    '$location',
+    '$anchorScroll',
+    'Wordpress',
+    '$routeParams',
+    '$sce',
+    '$state',
+    function($scope, $location, $anchorScroll, Wordpress, $routeParams, $sce, $state) {
+        console.log($routeParams.id);
+
+        if(!!$routeParams.id){
+            $scope.individual = true;
+            Wordpress.getPost($routeParams.id).then(post => {
+                $scope.post = post;
+                console.log($scope.post);
+                $scope.content = $sce.trustAsHtml(post.content);
+                $scope.$apply();
+            })
+        }else{
+            $scope.individual = false;
+            Wordpress.getBlogPosts().then(posts => {
+                $scope.blogPosts = posts;
+                console.log($scope.posts);
+                $scope.$apply();
+            });
+        }
+
+        $scope.openPost = function(id) {
+            console.log("opening: " + id);
+            $location.path('/blog/'+id, false);
+        }
     }]);

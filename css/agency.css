@@ -20,6 +20,12 @@
     margin-bottom: 45px;
 }
 
+img.size-full {
+    width: 100%;
+    height: auto;
+    margin: 30px 0 30px 0;
+}
+
 
 body {
   overflow-x: hidden;
