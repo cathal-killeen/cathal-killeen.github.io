@@ -50,7 +50,8 @@ angular.module('app', [
     'ngRoute',
     'ngAnimate',
     'duScroll',
-    'ui.router'
+    'ui.router',
+    'angularMoment'
 ])
 .config(function($locationProvider, $routeProvider) {
 
