@@ -1,4 +1,6 @@
 var API_ENTRY = 'https://public-api.wordpress.com/rest/v1.1/sites/128735069'
+
+// data for experience timeline
 var experience = [
     {
         time: "February 2011",
@@ -44,6 +46,34 @@ var experience = [
     }
 ];
 
+// social media links and info
+var social = [
+    {
+        name: "GitHub",
+        url: "https://github.com/cathal-killeen",
+        username: "cathal-killeen",
+        icon: "fa-github"
+    },
+    {
+        name: "LinkedIn",
+        url: "https://www.linkedin.com/in/cathalkilleen/",
+        username: "cathalkilleen",
+        icon: "fa-linkedin"
+    },
+    {
+        name: "AngelList",
+        url: "https://angel.co/cathalkilleen",
+        username: "cathalkilleen",
+        icon: "fa-angellist"
+    },
+    {
+        name: "Twitter",
+        url: "https://twitter.com/cathalkilleen",
+        username: "cathalkilleen",
+        icon: "fa-twitter"
+    }
+]
+
 
 // Declare app level module which depends on views, and components
 angular.module('app', [
@@ -78,6 +108,23 @@ angular.module('app', [
         return;
     }
 
+})
+.component('socialIcon', {
+    transclude: true,
+    template: '<a ng-show="$ctrl.info" ng-href="{{$ctrl.info.url}}" target="_blank"><i class="fa" ng-class="$ctrl.info.icon"></i></a>',
+    controller: function() {
+        this.$onInit = function() {
+            social.forEach(network => {
+                if(network.name === this.name){
+                    this.info = network;
+                    console.log(this.info);
+                }
+            })
+        }
+    },
+    bindings: {
+        name: '@'
+    }
 })
 .factory('Wordpress', [
     '$rootScope',
