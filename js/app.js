@@ -129,120 +129,158 @@ angular.module('app', [
 .factory('Wordpress', [
     '$rootScope',
     '$http',
-    function($rootScope, $http) {
+    '$sce',
+    function($rootScope, $http, $sce) {
 
-        // Private methods.
-        function get() {
-            return new Promise(function(resolve, reject) {
-                $http.get(API_ENTRY + '/posts').then(function(response){
-                    $rootScope.siteData = response.data;
-                    resolve(response.data);
-                });
+    // Private methods
+
+    // get all posts from Wordpress API endpoint
+    function get() {
+        return new Promise(function(resolve, reject) {
+            $http.get(API_ENTRY + '/posts').then(function(response){
+                $rootScope.siteData = response.data;
+                resolve(response.data);
             });
-        }
+        });
+    }
 
-        function findProjects(posts) {
-            return new Promise(function(resolve, reject) {
-                var projects = [];
-                posts.forEach(function(post){
-                    if(post.categories.hasOwnProperty('Projects')){
-                        //get sub categories
-                        var cats = Object.keys(post.categories);
-                        cats.splice(cats.indexOf('Projects'));
-                        post.project_type = cats[0];
+    // find projects and appent custom data
+    // projects are posts with 'Project' category
+    function findProjects(posts) {
+        return new Promise(function(resolve, reject) {
+            var projects = [];
+            posts.forEach(function(post){
+                if(post.categories.hasOwnProperty('Projects')){
+                    //get sub categories
+                    var cats = Object.keys(post.categories);
+                    cats.splice(cats.indexOf('Projects'));
+                    post.project_type = cats[0];
 
-                        // parse json from excerpt
-                        var stripped = post.excerpt.replace(/<(?:.|\n)*?>/gm, '').replace(/\&#038;/gm, '&').replace(/\&#\d{4};/gm, '"');
-                        console.log(stripped);
-                        // check if excerpt is in json format
-                        if(stripped[0] === '{'){
-                            var obj = angular.fromJson(stripped);
-                            console.log(obj);
-                            post.demo_links = obj;
+                    // parse json from excerpt
+                    var stripped = post.excerpt.replace(/<(?:.|\n)*?>/gm, '').replace(/\&#038;/gm, '&').replace(/\&#\d{4};/gm, '"');
+                    console.log(stripped);
+                    // check if excerpt is in json format
+                    if(stripped[0] === '{'){
+                        var obj = angular.fromJson(stripped);
+                        console.log(obj);
+                        post.demo_links = obj;
+                    }
+
+                    projects.push(post);
+                }
+            });
+            $rootScope.projects = projects;
+            $rootScope.home_projects = projects.slice(0,6);
+
+            resolve(projects);
+        });
+    }
+
+    // get all posts with category 'Blog'
+    function getBlogPosts(){
+        return new Promise(function(resolve, reject) {
+            if($rootScope.blogPosts){
+                var blogPosts = $rootScope.blogPosts;
+                resolve(blogPosts);
+            }else{
+                get().then(function(data){
+                    var blogPosts = [];
+                    data.posts.forEach(function(post){
+                        if(post.categories.hasOwnProperty('Blog')){
+                            blogPosts.push(post);
                         }
+                    });
+                    $rootScope.blogPosts = blogPosts;
 
-                        projects.push(post);
-                    }
-                });
-                $rootScope.projects = projects;
-                $rootScope.home_projects = projects.slice(0,6);
+                    resolve(blogPosts);
+                })
+            }
+        });
+    }
 
-                resolve(projects);
-            });
-        }
-
-        function getProjects(){
-            return new Promise(function(resolve, reject) {
-                if($rootScope.siteData){
-                    if($rootScope.projects){
-                        var projects = $rootScope.projects;
+    // returns Projects - public method
+    function getProjects(){
+        return new Promise(function(resolve, reject) {
+            if($rootScope.siteData){
+                if($rootScope.projects){
+                    var projects = $rootScope.projects;
+                    resolve(projects);
+                }else{
+                    findProjects($rootScope.siteData.posts).then(function(projects){
                         resolve(projects);
-                    }else{
-                        findProjects($rootScope.siteData.posts).then(function(projects){
-                            resolve(projects);
-                        });
-                    }
+                    });
                 }
-                else{
-                    get().then(function(data){
-                        findProjects(data.posts).then(function(projects){
-                            resolve(projects);
-                        });
+            }
+            else{
+                get().then(function(data){
+                    findProjects(data.posts).then(function(projects){
+                        resolve(projects);
+                    });
+                })
+            }
+        });
+    }
+
+    // public API
+    return {
+        getBlogPosts: getBlogPosts,
+        getProjects: getProjects,
+        getHomeProjects: () => {
+            return new Promise(function(resolve, reject) {
+                getProjects().then(function(projects){
+                    homeProjects = projects.slice(0,6);
+                    resolve(homeProjects);
+                })
+            });
+        },
+        getBySlug: (slug) => {
+            return new Promise(function(resolve, reject) {
+                getProjects().then(function(projects){
+                    projects.forEach(function(project){
+                        if(project.slug == slug){
+                            resolve(project);
+                        }
                     })
-                }
+                    reject();
+                })
+
             });
         }
+    };
+}])
 
-        // public API
-        return {
-            getProjects: getProjects,
-            getHomeProjects: () => {
-                return new Promise(function(resolve, reject) {
-                    getProjects().then(function(projects){
-                        homeProjects = projects.slice(0,6);
-                        resolve(homeProjects);
-                    })
-                });
-            },
-            getBySlug: (slug) => {
-                return new Promise(function(resolve, reject) {
-                    getProjects().then(function(projects){
-                        projects.forEach(function(project){
-                            if(project.slug == slug){
-                                resolve(project);
-                            }
-                        })
-                        reject();
-                    })
+.controller('MainCtrl', [
+    '$scope',
+    '$http',
+    '$location',
+    '$anchorScroll',
+    '$interval',
+    'Wordpress',
+    '$sce',
+function($scope, $http, $location, $anchorScroll, $interval, Wordpress, $sce) {
+    $scope.experience = experience;
 
-                });
-            }
-        };
-    }])
+    angular.element("#img-heading").animate("tada");
 
-    .controller('MainCtrl', [
-        '$scope',
-        '$http',
-        '$location',
-        '$anchorScroll',
-        '$interval',
-        'Wordpress',
-        function($scope, $http, $location, $anchorScroll, $interval, Wordpress) {
-            $scope.experience = experience;
+    Wordpress.getHomeProjects().then(function(home_projects){
+        $scope.home_projects = home_projects;
+        console.log($scope.home_projects);
+        $scope.$apply();
+    });
 
-            angular.element("#img-heading").animate("tada");
+    Wordpress.getBlogPosts().then(posts => {
+        $scope.blogPosts = posts.slice(0,3);
+        $scope.blogPosts.forEach(post => {
+            post.sample = $sce.trustAsHtml(post.excerpt);
+        });
+        console.log($scope.blogPosts);
+        $scope.$apply();
+    })
 
-            Wordpress.getHomeProjects().then(function(home_projects){
-
-                $scope.home_projects = home_projects;
-                console.log($scope.home_projects);
-                $scope.$apply();
-            });
-
-            $scope.openProject = function(id) {
-                console.log("opening: " + id);
-                $location.path('/projects/'+id, false);
-            }
+    $scope.openProject = function(id) {
+        console.log("opening: " + id);
+        $location.path('/projects/'+id, false);
+    }
 
 }])
 .controller('ProjectsCtrl', [
