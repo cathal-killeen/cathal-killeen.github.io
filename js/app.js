@@ -1,5 +1,3 @@
-var API_ENTRY = 'https://public-api.wordpress.com/rest/v1.1/sites/128735069'
-
 // data for experience timeline
 var experience = [
     {
@@ -46,37 +44,8 @@ var experience = [
     }
 ];
 
-// social media links and info
-var social = [
-    {
-        name: "GitHub",
-        url: "https://github.com/cathal-killeen",
-        username: "cathal-killeen",
-        icon: "fa-github"
-    },
-    {
-        name: "LinkedIn",
-        url: "https://www.linkedin.com/in/cathalkilleen/",
-        username: "cathalkilleen",
-        icon: "fa-linkedin"
-    },
-    {
-        name: "AngelList",
-        url: "https://angel.co/cathalkilleen",
-        username: "cathalkilleen",
-        icon: "fa-angellist"
-    },
-    {
-        name: "Twitter",
-        url: "https://twitter.com/cathalkilleen",
-        username: "cathalkilleen",
-        icon: "fa-twitter"
-    }
-]
-
-
 // Declare app level module which depends on views, and components
-angular.module('app', [
+var app = angular.module('app', [
     'ngRoute',
     'ngAnimate',
     'duScroll',
@@ -84,7 +53,6 @@ angular.module('app', [
     'angularMoment'
 ])
 .config(function($locationProvider, $routeProvider) {
-
     $locationProvider.html5Mode(true);
 
     $routeProvider
@@ -111,203 +79,15 @@ angular.module('app', [
 })
 .value('duScrollDuration', 600)
 .value('duScrollOffset', 50)
-.run(function($rootScope) {
-    if(!window.history || !history.replaceState) {
-        return;
-    }
-
-})
-.component('socialIcon', {
-    transclude: true,
-    template: '<a ng-show="$ctrl.info" ng-href="{{$ctrl.info.url}}" target="_blank"><i class="fa" ng-class="$ctrl.info.icon"></i></a>',
-    controller: function() {
-        this.$onInit = function() {
-            social.forEach(network => {
-                if(network.name === this.name){
-                    this.info = network;
-                }
-            })
-        }
-    },
-    bindings: {
-        name: '@'
-    }
-})
-.factory('Wordpress', [
-    '$rootScope',
-    '$http',
-    '$sce',
-    function($rootScope, $http, $sce) {
-
-    // Private methods
-
-    // get all posts from Wordpress API endpoint
-    function get() {
-        return new Promise(function(resolve, reject) {
-            $http.get(API_ENTRY + '/posts').then(function(response){
-                $rootScope.siteData = response.data;
-                resolve(response.data);
-            });
-        });
-    }
-
-    // find projects and appent custom data
-    // projects are posts with 'Project' category
-    function findProjects(posts) {
-        return new Promise(function(resolve, reject) {
-            var projects = [];
-            posts.forEach(function(post){
-                if(post.categories.hasOwnProperty('Projects')){
-                    //get sub categories
-                    var cats = Object.keys(post.categories);
-                    cats.splice(cats.indexOf('Projects'));
-                    post.project_type = cats[0];
-
-                    // parse json from excerpt
-                    var stripped = post.excerpt.replace(/<(?:.|\n)*?>/gm, '').replace(/\&#038;/gm, '&').replace(/\&#\d{4};/gm, '"');
-                    // check if excerpt is in json format
-                    if(stripped[0] === '{'){
-                        var obj = angular.fromJson(stripped);
-                        console.log(obj);
-                        post.demo_links = obj;
-                    }
-
-                    projects.push(post);
-                }
-            });
-            $rootScope.projects = projects;
-            $rootScope.home_projects = projects.slice(0,6);
-
-            resolve(projects);
-        });
-    }
-
-    // get all posts with category 'Blog'
-    function getBlogPosts(){
-        return new Promise(function(resolve, reject) {
-            if($rootScope.blogPosts){
-                var blogPosts = $rootScope.blogPosts;
-                resolve(blogPosts);
-            }else{
-                get().then(function(data){
-                    var blogPosts = [];
-                    data.posts.forEach(function(post){
-                        if(post.categories.hasOwnProperty('Blog')){
-                            post.sample = $sce.trustAsHtml(post.excerpt);
-                            blogPosts.push(post);
-                        }
-                    });
-                    $rootScope.blogPosts = blogPosts;
-
-                    resolve(blogPosts);
-                })
-            }
-        });
-    }
-
-    // returns Projects - public method
-    function getProjects(){
-        return new Promise(function(resolve, reject) {
-            if($rootScope.siteData){
-                if($rootScope.projects){
-                    var projects = $rootScope.projects;
-                    resolve(projects);
-                }else{
-                    findProjects($rootScope.siteData.posts).then(function(projects){
-                        resolve(projects);
-                    });
-                }
-            }
-            else{
-                get().then(function(data){
-                    findProjects(data.posts).then(function(projects){
-                        resolve(projects);
-                    });
-                })
-            }
-        });
-    }
-
-    // public API
-    return {
-        getBlogPosts: getBlogPosts,
-        getProjects: getProjects,
-        getHomeProjects: () => {
-            return new Promise(function(resolve, reject) {
-                getProjects().then(function(projects){
-                    homeProjects = projects.slice(0,6);
-                    resolve(homeProjects);
-                })
-            });
-        },
-        getBySlug: (slug) => {
-            return new Promise(function(resolve, reject) {
-                getProjects().then(function(projects){
-                    projects.forEach(function(project){
-                        if(project.slug == slug){
-                            resolve(project);
-                        }
-                    })
-                    reject();
-                })
-            });
-        },
-        getPost: (slug) => {
-            return new Promise(function(resolve, reject) {
-                getBlogPosts().then(posts => {
-                    console.log(posts);
-                    posts.forEach(post => {
-                        if(post.slug == slug){
-                            resolve(post);
-                        }
-                    })
-                    reject();
-                })
-            });
-        }
-    };
-}])
 
 .controller('MainCtrl', [
     '$scope',
-    '$http',
     '$location',
-    '$anchorScroll',
-    '$interval',
     'Wordpress',
-    '$sce',
-function($scope, $http, $location, $anchorScroll, $interval, Wordpress, $sce) {
+function($scope, $location, Wordpress) {
+    console.log($location.search().projects);
+
     $scope.experience = experience;
-
-    $scope.sent = false;
-    $scope.error = "";
-
-    $scope.contact = {
-        name: "",
-        email: "",
-        message: ""
-    }
-
-    var validateMessage = function(){
-        if($scope.contact.name.length > 0){
-            if($scope.contact.email.length > 0){
-                if($scope.contact.message.length > 0){
-                    return true;
-                }else{
-                    $scope.error = "Please enter a message.";
-                    return false;
-                }
-            }else{
-                $scope.error = "Please enter an email.";
-                return false;
-            }
-        }else{
-            $scope.error = "Please enter a name.";
-            return false;
-        }
-    }
-
-    angular.element("#img-heading").animate("tada");
 
     Wordpress.getHomeProjects().then(function(home_projects){
         $scope.home_projects = home_projects;
@@ -325,29 +105,6 @@ function($scope, $http, $location, $anchorScroll, $interval, Wordpress, $sce) {
         console.log("opening: " + id);
         $location.path('/projects/'+id, false);
     }
-
-    $scope.sendMessage = function() {
-        if(validateMessage()){
-            $http({
-                url: "http://formspree.io/" + "cathalkilleen+website" + "@" + "gmail" + "." + "com",
-                data: $.param(
-                    $scope.contact
-                ),
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            }).then(function(response){
-                if(response.status == 200){
-                    $scope.error = "";
-                    $scope.sent = true;
-                }
-                console.log(response);
-            })
-        }
-    }
-
 }])
 .controller('ProjectsCtrl', [
     '$scope',
