@@ -9,37 +9,7 @@
 
 <!-- Individual project -->
 <section id="projects" ng-show="individual">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12" >
-                <a href="/projects"><h4><i class="fa fa-hand-o-left" style="margin-right:8px;font-size:120%"></i>Back to Projects</h4></a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 text-center" style="margin-top:45px;">
-                <h2 class="section-heading">{{project.title}}</h2>
-                <h3 class="section-subheading text-muted" style="margin-bottom:20px;">Posted on <span>{{project.date | amDateFormat:'LL'}}</span></h3>
-            </div>
-        </div>
-        <div class="row" style="margin: 20px 0 40px 0;">
-            <div class="col-lg-12 text-center">
-                <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.demo}}" ng-show="project.demo_links.demo" target="_blank"><i class="fa fa-desktop" style="margin-right:8px;"></i>Live Demo</a>
-                <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.site}}" ng-show="project.demo_links.site" target="_blank" style="background-color:#4527a0;border-color:#4527a0;"><i class="fa fa-desktop" style="margin-right:8px;"></i>View Site</a>
-                <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.repo}}" ng-show="project.demo_links.repo" target="_blank" style="background-color:#3F4448;border-color:#3F4448;"><i class="fa fa-github" style="margin-right:8px;font-size:120%"></i>GitHub Repo</a>
-                <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.devpost}}" ng-show="project.demo_links.devpost" target="_blank" style="background-color:#003E54;border-color:#003E54;"><i class="fa fa-trophy" style="margin-right:8px;font-size:120%"></i>Devpost</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <img id="post-featured-image" ng-src="{{project.featured_image}}" alt="">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div ng-bind-html="content" class="post-content"></div>
-            </div>
-        </div>
-    </div>
+    <individual-project></individual-project>
 </section>
 
 <!-- Footer component -->

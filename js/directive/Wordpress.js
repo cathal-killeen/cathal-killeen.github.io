@@ -112,6 +112,7 @@ app.factory('Wordpress', [
                 getProjects().then(function(projects){
                     projects.forEach(function(project){
                         if(project.slug == slug){
+                            project.html_content = $sce.trustAsHtml(project.content);
                             resolve(project);
                         }
                     })

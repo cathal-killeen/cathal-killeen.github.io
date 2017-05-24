@@ -61,29 +61,13 @@ function($scope, $location) {
 .controller('ProjectsCtrl', [
     '$scope',
     '$location',
-    '$anchorScroll',
-    'Wordpress',
     '$routeParams',
-    '$sce',
-    '$state',
-    function($scope, $location, $anchorScroll, Wordpress, $routeParams, $sce, $state) {
+    function($scope, $location, $routeParams) {
         if($routeParams.id){
             $scope.individual = true;
-            Wordpress.getBySlug($routeParams.id).then(function(project){
-                $scope.project = project;
-                console.log($scope.project);
-                $scope.content = $sce.trustAsHtml(project.content);
-                $scope.$apply();
-            });
         }else{
             $scope.individual = false;
         }
-
-        $scope.openProject = function(id) {
-            console.log("opening: " + id);
-            $location.path('/projects/'+id, false);
-        }
-
     }])
 
 .controller('BlogCtrl', [
@@ -104,7 +88,7 @@ function($scope, $location) {
                 console.log($scope.post);
                 $scope.content = $sce.trustAsHtml(post.content);
                 $scope.$apply();
-            })
+            });
         }else{
             $scope.individual = false;
             Wordpress.getBlogPosts().then(posts => {
