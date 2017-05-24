@@ -92,11 +92,11 @@ var app = angular.module('app', [
     });
 
     // Offset for Main Navigation
-    // $('#mainNav').affix({
-    //     offset: {
-    //         top: 120
-    //     }
-    // })
+    $('#mainNav').affix({
+        offset: {
+            top: 120
+        }
+    })
 })
 .controller('MainCtrl', [
     '$scope',
