@@ -35,7 +35,7 @@ app.factory('Wordpress', [
                     // check if excerpt is in json format
                     if(stripped[0] === '{'){
                         var obj = angular.fromJson(stripped);
-                        console.log(obj);
+                        // console.log(obj);
                         post.demo_links = obj;
                     }
 
@@ -122,7 +122,7 @@ app.factory('Wordpress', [
         getPost: (slug) => {
             return new Promise(function(resolve, reject) {
                 getBlogPosts().then(posts => {
-                    console.log(posts);
+                    // console.log(posts);
                     posts.forEach(post => {
                         if(post.slug == slug){
                             resolve(post);
