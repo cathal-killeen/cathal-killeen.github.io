@@ -77,11 +77,6 @@ function($scope, $location) {
             });
         }else{
             $scope.individual = false;
-            Wordpress.getProjects().then(function(projects){
-                $scope.projects = projects;
-                console.log($scope.projects);
-                $scope.$apply();
-            })
         }
 
         $scope.openProject = function(id) {
