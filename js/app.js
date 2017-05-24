@@ -107,22 +107,11 @@ function($scope, $location, Wordpress) {
 
     $scope.experience = experience;
 
-    Wordpress.getHomeProjects().then(function(home_projects){
-        $scope.home_projects = home_projects;
-        console.log($scope.home_projects);
-        $scope.$apply();
-    });
-
     Wordpress.getBlogPosts().then(posts => {
         $scope.blogPosts = posts.slice(0,3);
         console.log($scope.blogPosts);
         $scope.$apply();
     })
-
-    $scope.openProject = function(id) {
-        console.log("opening: " + id);
-        $location.path('/projects/'+id, false);
-    }
 }])
 .controller('ProjectsCtrl', [
     '$scope',

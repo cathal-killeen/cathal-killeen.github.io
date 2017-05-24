@@ -8,34 +8,7 @@
 
 <!-- Project Grid Section -->
 <section id="projects">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2 class="section-heading">Projects</h2>
-                <h3 class="section-subheading text-muted">Software projects that I have worked on, including hackathon projects, personal, college and client projects.</h3>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-sm-6 projects-item" ng-repeat="project in home_projects" style="margin-bottom:30px">
-                <a href="/projects/{{project.slug}}" class="projects-link">
-                    <div class="projects-hover">
-                        <div class="projects-hover-content">
-                            <i class="fa fa-arrows-alt fa-3x"></i>
-                        </div>
-                    </div>
-                    <div class="img-project" ng-style="{'background-image':'url({{project.featured_image}})'}"></div>
-                </a>
-                <div class="projects-caption" style="background-color:#EEEEEE;">
-                    <h5>{{project.title}}</h5>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 text-center" style="margin-top:30px">
-                <button class="btn btn-xl" onclick="location.href = '/projects';">See All Projects <i class="fa fa-arrow-right"></i></button>
-            </div>
-        </div>
-    </div>
+    <main-projects></main-projects>
 </section>
 
 <!-- Blog Section -->
