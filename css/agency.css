@@ -4,6 +4,10 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+.youtube-player {
+    width: 100%;
+}
+
  .blog-preview.row {
    display: -webkit-box;
    display: -webkit-flex;
