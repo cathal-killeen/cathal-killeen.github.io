@@ -55,15 +55,8 @@ var app = angular.module('app', [
 .controller('MainCtrl', [
     '$scope',
     '$location',
-    'Wordpress',
-function($scope, $location, Wordpress) {
+function($scope, $location) {
     console.log($location.search().projects);
-
-    Wordpress.getBlogPosts().then(posts => {
-        $scope.blogPosts = posts.slice(0,3);
-        console.log($scope.blogPosts);
-        $scope.$apply();
-    })
 }])
 .controller('ProjectsCtrl', [
     '$scope',

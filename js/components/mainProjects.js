@@ -5,8 +5,8 @@ app.component('mainProjects', {
 });
 
 
-Controller.$inject = ['$scope', 'Wordpress'];
-function Controller($scope, Wordpress) {
+Controller.$inject = ['$scope', 'Wordpress', '$location'];
+function Controller($scope, Wordpress, $location) {
     Wordpress.getHomeProjects().then(function(home_projects){
         $scope.home_projects = home_projects;
         console.log($scope.home_projects);

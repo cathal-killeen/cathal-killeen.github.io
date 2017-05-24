@@ -13,26 +13,7 @@
 
 <!-- Blog Section -->
 <section id="blog" class="bg-light-gray">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2 class="section-heading">Blog</h2>
-                <h3 class="section-subheading text-muted">Posts about events and hackathons I have attended.</h3>
-            </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-md-4" ng-repeat="post in blogPosts" style="margin-bottom:80px">
-                <a href="#"><div class="img-project" ng-style="{'background-image':'url({{post.featured_image}})'}"></div></a>
-                <a href="#"><h4 class="service-heading">{{post.title}}</h4></a>
-                <p class="text-muted" ng-bind-html="post.sample" style="max-width:500px;margin:auto;"></p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 text-center" style="margin-top:30px">
-                <button class="btn btn-xl" onclick="location.href = '/blog';">See All Posts <i class="fa fa-arrow-right"></i></button>
-            </div>
-        </div>
-    </div>
+    <main-blog></main-blog>
 </section>
 
 <!-- Experience Timeline Section -->
