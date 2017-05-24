@@ -81,7 +81,7 @@ function($scope, $location) {
     function($scope, $location, $anchorScroll, Wordpress, $routeParams, $sce, $state) {
         console.log($routeParams.id);
 
-        if(!!$routeParams.id){
+        if($routeParams.id){
             $scope.individual = true;
             Wordpress.getPost($routeParams.id).then(post => {
                 $scope.post = post;
@@ -91,11 +91,6 @@ function($scope, $location) {
             });
         }else{
             $scope.individual = false;
-            Wordpress.getBlogPosts().then(posts => {
-                $scope.blogPosts = posts;
-                console.log($scope.posts);
-                $scope.$apply();
-            });
         }
 
         $scope.openPost = function(id) {
