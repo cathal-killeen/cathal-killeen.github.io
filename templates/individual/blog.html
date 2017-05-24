@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12" >
+            <a href="/blog"><h4><i class="fa fa-hand-o-left" style="margin-right:8px;font-size:120%"></i>Back to All Posts</h4></a>
+        </div>
+    </div>
+    <div class="col-lg-12 text-center" ng-show="loading">
+        <h3 class="section-subheading text-muted">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw" style="margin-right:10px;"></i> Loading...
+        </h3>
+    </div>
+    <div class="row" ng-hide="loading">
+        <div class="col-lg-12 text-center" style="margin-top:45px;">
+            <h2 class="section-heading">{{post.title}}</h2>
+            <h3 class="section-subheading text-muted" style="margin-bottom:20px;">Posted on <span>{{post.date | amDateFormat:'LL'}}</span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <img id="post-featured-image" ng-src="{{post.featured_image}}" alt="">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div ng-bind-html="post.html_content" class="post-content"></div>
+        </div>
+    </div>
+</div>

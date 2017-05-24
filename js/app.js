@@ -83,12 +83,6 @@ function($scope, $location) {
 
         if($routeParams.id){
             $scope.individual = true;
-            Wordpress.getPost($routeParams.id).then(post => {
-                $scope.post = post;
-                console.log($scope.post);
-                $scope.content = $sce.trustAsHtml(post.content);
-                $scope.$apply();
-            });
         }else{
             $scope.individual = false;
         }

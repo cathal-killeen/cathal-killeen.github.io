@@ -126,6 +126,7 @@ app.factory('Wordpress', [
                     // console.log(posts);
                     posts.forEach(post => {
                         if(post.slug == slug){
+                            post.html_content = $sce.trustAsHtml(post.content);
                             resolve(post);
                         }
                     })
