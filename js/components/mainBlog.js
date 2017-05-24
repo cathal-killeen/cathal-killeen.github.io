@@ -6,9 +6,12 @@ app.component('mainBlog', {
 
 Controller.$inject = ['$scope', 'Wordpress', '$location'];
 function Controller($scope, Wordpress, $location) {
+    $scope.loading = true;
+
     Wordpress.getBlogPosts().then(posts => {
         $scope.blogPosts = posts.slice(0,3);
         console.log($scope.blogPosts);
+        $scope.loading = false;
         $scope.$apply();
     });
 

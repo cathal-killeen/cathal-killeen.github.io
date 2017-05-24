@@ -27,7 +27,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="margin-top:20px;">
+            <div class="alert alert-info" ng-show="sending" role="alert">
+                <b><i class="fa fa-spinner fa-pulse fa-fw" style="margin-right:10px;"></i> Sending...</b>
+            </div>
             <div class="alert alert-success" ng-show="sent" role="alert"><b>Your message has been sent!</b> I will get back to you asap!</div>
             <div class="alert alert-danger" ng-show="error.length > 0"role="alert"><b>Error!</b> {{error}}</div>
         </div>

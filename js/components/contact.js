@@ -34,6 +34,7 @@ function Controller($scope, $http) {
     }
 
     $scope.sendMessage = function() {
+        $scope.sending = true;
         if(validateMessage()){
             $http({
                 url: "http://formspree.io/" + "cathalkilleen+website" + "@" + "gmail" + "." + "com",
@@ -51,7 +52,10 @@ function Controller($scope, $http) {
                     $scope.sent = true;
                 }
                 console.log(response);
+                $scope.sending = false;
             })
+        }else{
+            $scope.sending = false;
         }
     }
 }
