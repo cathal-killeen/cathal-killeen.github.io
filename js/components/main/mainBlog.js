@@ -4,8 +4,8 @@ app.component('mainBlog', {
     controller: Controller
 });
 
-Controller.$inject = ['$scope', 'Wordpress', '$location'];
-function Controller($scope, Wordpress, $location) {
+Controller.$inject = ['$scope', 'Wordpress'];
+function Controller($scope, Wordpress) {
     $scope.loading = true;
 
     Wordpress.getBlogPosts().then(posts => {
@@ -14,9 +14,4 @@ function Controller($scope, Wordpress, $location) {
         $scope.loading = false;
         $scope.$apply();
     });
-
-    $scope.openPost = function(id) {
-        console.log("opening: " + id);
-        $location.path('/blog/'+id, false);
-    }
 }

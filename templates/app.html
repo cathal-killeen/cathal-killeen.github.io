@@ -1,0 +1,27 @@
+<main-page ng-show="state == 'main'"></main-page>
+
+<!-- Navigation -->
+<icon-navbar ng-hide="state == 'main'"></icon-navbar>
+
+<!-- Blog Grid Section -->
+<section id="blog" style="margin: 50px 0 0 0;" ng-show="state == 'blog'">
+    <blog-grid></blog-grid>
+</section>
+
+<!-- Individual Blog Post -->
+<section id="blog" ng-show="state == 'post'">
+    <individual-blog></individual-blog>
+</section>
+
+<!-- Project Grid Section -->
+<section id="projects" style="margin: 50px 0 0 0;" ng-show="state == 'projects'">
+    <project-grid></project-grid>
+</section>
+
+<!-- Individual project -->
+<section id="projects" ng-show="state == 'project'">
+    <individual-project></individual-project>
+</section>
+
+<!-- Footer component -->
+<foot></foot>

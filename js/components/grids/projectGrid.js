@@ -3,8 +3,8 @@ app.component('projectGrid', {
     controller: Controller
 });
 
-Controller.$inject = ['$scope', 'Wordpress', '$location'];
-function Controller($scope, Wordpress, $location) {
+Controller.$inject = ['$scope', 'Wordpress'];
+function Controller($scope, Wordpress) {
     $scope.loading = true;
     Wordpress.getProjects().then(
         projects => {
@@ -14,9 +14,4 @@ function Controller($scope, Wordpress, $location) {
             $scope.$apply();
         }
     );
-
-    $scope.openProject = function(id) {
-        console.log("opening: " + id);
-        $location.path('/projects/'+id, false);
-    }
 }

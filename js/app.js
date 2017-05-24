@@ -11,24 +11,8 @@ var app = angular.module('app', [
 
     $routeProvider
     .when("/", {
-        templateUrl : "templates/main.html",
-        controller: 'MainCtrl'
-    })
-    .when("/projects", {
-        templateUrl : "templates/projects.html",
-        controller: 'ProjectsCtrl'
-    })
-    .when("/projects/:id", {
-        templateUrl: "templates/projects.html",
-        controller: 'ProjectsCtrl'
-    })
-    .when("/blog", {
-        templateUrl : "templates/blog.html",
-        controller: 'BlogCtrl'
-    })
-    .when("/blog/:id", {
-        templateUrl: "templates/blog.html",
-        controller: 'BlogCtrl'
+        templateUrl : "templates/app.html",
+        controller: 'AppCtrl'
     })
 })
 .value('duScrollDuration', 600)
@@ -52,43 +36,22 @@ var app = angular.module('app', [
         }
     })
 })
-.controller('MainCtrl', [
+.controller('AppCtrl', [
     '$scope',
     '$location',
 function($scope, $location) {
-    console.log($location.search().projects);
-}])
-.controller('ProjectsCtrl', [
-    '$scope',
-    '$location',
-    '$routeParams',
-    function($scope, $location, $routeParams) {
-        if($routeParams.id){
-            $scope.individual = true;
-        }else{
-            $scope.individual = false;
-        }
-    }])
+    var route = $location.search();
 
-.controller('BlogCtrl', [
-    '$scope',
-    '$location',
-    '$anchorScroll',
-    'Wordpress',
-    '$routeParams',
-    '$sce',
-    '$state',
-    function($scope, $location, $anchorScroll, Wordpress, $routeParams, $sce, $state) {
-        console.log($routeParams.id);
-
-        if($routeParams.id){
-            $scope.individual = true;
-        }else{
-            $scope.individual = false;
-        }
-
-        $scope.openPost = function(id) {
-            console.log("opening: " + id);
-            $location.path('/blog/'+id, false);
-        }
-    }]);
+    if(route.hasOwnProperty('projects')){
+        $scope.state = 'projects';
+    }else if(route.hasOwnProperty('project')){
+        $scope.state = 'project';
+    }else if(route.hasOwnProperty('blog')){
+        $scope.state = 'blog';
+    }else if(route.hasOwnProperty('post')){
+        $scope.state = 'post';
+    }else{
+        $scope.state = 'main';
+    }
+    console.log($scope.state);
+}]);
