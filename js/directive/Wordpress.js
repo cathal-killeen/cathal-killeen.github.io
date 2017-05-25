@@ -11,7 +11,7 @@ app.factory('Wordpress', [
     // get all posts from Wordpress API endpoint
     function get() {
         return new Promise(function(resolve, reject) {
-            $http.get(API_ENTRY + '/posts').then(function(response){
+            $http.get(API_ENTRY + '/posts/?number=100').then(function(response){
                 $rootScope.siteData = response.data;
                 resolve(response.data);
             });

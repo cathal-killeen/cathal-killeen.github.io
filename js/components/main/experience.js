@@ -48,9 +48,15 @@ var experience = [
         image_url: "/img/experience/agrie.png"
     },
     {
-        time: "August 2016-May 2017",
+        time: "August 2016 - May 2017",
         title: "Study Abroad CU Boulder",
         description: "During the 2016/17 academic year, I did a study abroad exchange at the University of Colorado Boulder in the USA. Living in Boulder allowed me to travel to many different hackathons across the USA, and visit various tech centers around the country. I also experienced a different academic culture, and was able to take some Computer Science classes that were not available at UCD.",
         image_url: "/img/experience/boulder.jpg"
+    },
+    {
+        time: "November 2016 - May 2017",
+        title: "HackCU",
+        description: "During the year I spent at Boulder, I became involved with HackCU, which is an intercollegiate Hackathon organized entirely by students at the university. Throughout the year, I helped organize events on campus including the flagship event HackCU, which saw over 400 attendees in 2017. I led the web development team that built the landing page and LIVE page for HackCU III.",
+        image_url: "/img/experience/hackcu.jpg"
     }
 ];
