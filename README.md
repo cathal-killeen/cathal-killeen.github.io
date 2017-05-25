@@ -10,6 +10,8 @@ The site is built with the following technologies:
 
 * [AngularJS] - custom query routing and creating HTML components
 * [Bootstrap] - CSS and JS components
+* [Wordpress.com API] - used as a CMS for projects and blog posts
+* [GitHub Pages] - FREEEEEEE hosting
 
 The site is based on the [Agency] Bootstrap theme by [@BlackrockDigital].
 
@@ -26,3 +28,5 @@ MIT - please use as you see fit.
    [Agency]: <https://github.com/BlackrockDigital/startbootstrap-agency>
    [@BlackrockDigital]: <https://github.com/BlackrockDigital>
    [realfavicongenerator.net]: <http://realfavicongenerator.net/>
+   [Wordpress.com API]: <https://developer.wordpress.com/docs/api/>
+   [GitHub Pages]: <https://pages.github.com/>
