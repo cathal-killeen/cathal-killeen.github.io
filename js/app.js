@@ -20,9 +20,6 @@ var app = angular.module('app', [
 
     AnalyticsProvider.setAccount(ANALYTICS);
 
-    // for testing localhost
-    AnalyticsProvider.setDomainName('none');
-
     AnalyticsProvider.trackUrlParams(true);
 
 })
