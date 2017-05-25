@@ -47,19 +47,29 @@ var app = angular.module('app', [
 .controller('AppCtrl', [
     '$scope',
     '$location',
-function($scope, $location) {
+    'Wordpress',
+function($scope, $location, Wordpress) {
     var route = $location.search();
 
     if(route.hasOwnProperty('projects')){
         $scope.state = 'projects';
+        document.title = 'Projects - Cathal Killeen';
     }else if(route.hasOwnProperty('project')){
         $scope.state = 'project';
+        Wordpress.getProjectTitle(route.project).then(title => {
+            document.title = title + ' - Cathal Killeen';
+        })
     }else if(route.hasOwnProperty('blog')){
         $scope.state = 'blog';
+        document.title = 'Blog - Cathal Killeen';
     }else if(route.hasOwnProperty('post')){
         $scope.state = 'post';
+        Wordpress.getPostTitle(route.post).then(title => {
+            document.title = title + ' - Cathal Killeen';
+        })
     }else{
         $scope.state = 'main';
+        document.title = 'Cathal Killeen';
     }
     console.log($scope.state);
 }]);

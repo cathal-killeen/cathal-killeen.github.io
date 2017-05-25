@@ -133,6 +133,30 @@ app.factory('Wordpress', [
                     reject();
                 })
             });
+        },
+        getProjectTitle: (slug) => {
+            return new Promise(function(resolve, reject) {
+                getProjects().then(function(projects){
+                    projects.forEach(function(project){
+                        if(project.slug == slug){
+                            resolve(project.title);
+                        }
+                    })
+                    reject();
+                })
+            });
+        },
+        getPostTitle: (slug) => {
+            return new Promise(function(resolve, reject) {
+                getBlogPosts().then(posts => {
+                    posts.forEach(post => {
+                        if(post.slug == slug){
+                            resolve(post.title);
+                        }
+                    })
+                    reject();
+                })
+            });
         }
     };
 }])
