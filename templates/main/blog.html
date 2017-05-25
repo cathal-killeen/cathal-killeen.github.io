@@ -12,14 +12,14 @@
             </h3>
         </div>
         <div class="col-md-4" ng-repeat="post in blogPosts" style="margin-bottom:80px" ng-hide="loading">
-            <a ng-href="/?post={{post.slug}}"><div class="img-project" ng-style="{'background-image':'url({{post.featured_image}})'}"></div></a>
-            <a ng-href="/?post={{post.slug}}"><h4 class="service-heading">{{post.title}}</h4></a>
+            <a ng-href="/?post={{post.slug}}" ga-track-event="['blog-home', 'view', 'blog', {{post.ID}}]"><div class="img-project" ng-style="{'background-image':'url({{post.featured_image}})'}"></div></a>
+            <a ng-href="/?post={{post.slug}}" ga-track-event="['blog-home', 'view', 'blog', {{post.ID}}]"><h4 class="service-heading">{{post.title}}</h4></a>
             <p class="text-muted" ng-bind-html="post.sample" style="max-width:500px;margin:auto;"></p>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12 text-center" style="margin-top:30px">
-            <button class="btn btn-xl" onclick="location.href = '/?blog';">See All Posts <i class="fa fa-arrow-right"></i></button>
+            <button class="btn btn-xl" onclick="location.href = '/?blog';" ga-track-event="['blog', 'view-all', 'blog']">See All Posts <i class="fa fa-arrow-right"></i></button>
         </div>
     </div>
 </div>

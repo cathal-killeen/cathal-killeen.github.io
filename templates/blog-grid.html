@@ -7,8 +7,8 @@
     </div>
     <div class="row text-center blog-preview">
         <div class="col-md-4" ng-repeat="post in blogPosts" style="margin-bottom:80px;margin:auto;">
-            <a ng-href="/?post={{post.slug}}"><div class="img-project" ng-style="{'background-image':'url({{post.featured_image}})'}"></div></a>
-            <a ng-href="/?post={{post.slug}}"><h4 class="service-heading">{{post.title}}</h4></a>
+            <a ng-href="/?post={{post.slug}}" ga-track-event="['blog-grid', 'view', 'blog', {{post.ID}}]"><div class="img-project" ng-style="{'background-image':'url({{post.featured_image}})'}"></div></a>
+            <a ng-href="/?post={{post.slug}}" ga-track-event="['blog-grid', 'view', 'blog', {{post.ID}}]"><h4 class="service-heading">{{post.title}}</h4></a>
             <p class="text-muted" ng-bind-html="post.sample" style="max-width:500px;margin:auto;"></p>
         </div>
     </div>

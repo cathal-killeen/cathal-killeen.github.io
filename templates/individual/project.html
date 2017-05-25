@@ -17,10 +17,10 @@
     </div>
     <div class="row" style="margin: 20px 0 40px 0;" ng-hide="loading">
         <div class="col-lg-12 text-center">
-            <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.demo}}" ng-show="project.demo_links.demo" target="_blank"><i class="fa fa-desktop" style="margin-right:8px;"></i>Live Demo</a>
-            <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.site}}" ng-show="project.demo_links.site" target="_blank" style="background-color:#4527a0;border-color:#4527a0;"><i class="fa fa-desktop" style="margin-right:8px;"></i>View Site</a>
-            <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.repo}}" ng-show="project.demo_links.repo" target="_blank" style="background-color:#3F4448;border-color:#3F4448;"><i class="fa fa-github" style="margin-right:8px;font-size:120%"></i>GitHub Repo</a>
-            <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.devpost}}" ng-show="project.demo_links.devpost" target="_blank" style="background-color:#003E54;border-color:#003E54;"><i class="fa fa-trophy" style="margin-right:8px;font-size:120%"></i>Devpost</a>
+            <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.demo}}" ng-show="project.demo_links.demo" ga-track-event="['external-demo', 'open', 'projects', {{project.ID}}]" target="_blank"><i class="fa fa-desktop" style="margin-right:8px;"></i>Live Demo</a>
+            <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.site}}" ng-show="project.demo_links.site" ga-track-event="['external-site', 'open', 'projects', {{project.ID}}]" target="_blank" style="background-color:#4527a0;border-color:#4527a0;"><i class="fa fa-desktop" style="margin-right:8px;"></i>View Site</a>
+            <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.repo}}" ng-show="project.demo_links.repo" ga-track-event="['external-repo', 'open', 'projects', {{project.ID}}]" target="_blank" style="background-color:#3F4448;border-color:#3F4448;"><i class="fa fa-github" style="margin-right:8px;font-size:120%"></i>GitHub Repo</a>
+            <a class="btn btn-xl btn-demo" ng-href="{{project.demo_links.devpost}}" ng-show="project.demo_links.devpost" ga-track-event="['external-devpost', 'open', 'projects', {{project.ID}}]" target="_blank" style="background-color:#003E54;border-color:#003E54;"><i class="fa fa-trophy" style="margin-right:8px;font-size:120%"></i>Devpost</a>
         </div>
     </div>
     <div class="row" ng-hide="loading">

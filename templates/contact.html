@@ -22,7 +22,7 @@
                         <input type="email" class="form-control" placeholder="Your Email *" id="email" ng-model="contact.email">
                     </div>
                     <div class="text-center">
-                        <button ng-click="sendMessage()" class="btn btn-xl">Send Message</button>
+                        <button ng-click="sendMessage()" class="btn btn-xl" ga-track-event="['sendMessage', 'click', 'contact']">Send Message</button>
                     </div>
                 </div>
             </div>

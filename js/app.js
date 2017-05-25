@@ -1,12 +1,15 @@
+var ANALYTICS = 'UA-99915540-1';
+
 // Declare app level module which depends on views, and components
 var app = angular.module('app', [
     'ngRoute',
     'ngAnimate',
     'duScroll',
     'ui.router',
-    'angularMoment'
+    'angularMoment',
+    'angular-google-analytics'
 ])
-.config(function($locationProvider, $routeProvider) {
+.config(function($locationProvider, $routeProvider, AnalyticsProvider) {
     $locationProvider.html5Mode(true);
 
     $routeProvider
@@ -14,10 +17,18 @@ var app = angular.module('app', [
         templateUrl : "templates/app.html",
         controller: 'AppCtrl'
     })
+
+    AnalyticsProvider.setAccount(ANALYTICS);
+
+    // for testing localhost
+    AnalyticsProvider.setDomainName('none');
+
+    AnalyticsProvider.trackUrlParams(true);
+
 })
 .value('duScrollDuration', 600)
 .value('duScrollOffset', 50)
-.run(function(){
+.run(function(Analytics){
     //Highlight the top nav as scrolling occurs
     $('body').scrollspy({
         target: '.navbar-fixed-top',
