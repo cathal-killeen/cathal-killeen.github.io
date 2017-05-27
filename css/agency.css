@@ -8,6 +8,12 @@
     width: 100%;
 }
 
+@media (max-width: 992px) {
+  .text-sm-center {
+    text-align: center;
+  }
+}
+
  .blog-preview.row {
    display: -webkit-box;
    display: -webkit-flex;

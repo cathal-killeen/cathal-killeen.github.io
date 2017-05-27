@@ -1,4 +1,5 @@
 var API_ENTRY = 'https://public-api.wordpress.com/rest/v1.1/sites/128735069';
+var tags = ['AngularJS','Heroku','UCD','CU Boulder'];
 
 app.factory('Wordpress', [
     '$rootScope',
@@ -25,11 +26,6 @@ app.factory('Wordpress', [
             var projects = [];
             posts.forEach(function(post){
                 if(post.categories.hasOwnProperty('Projects')){
-                    //get sub categories
-                    var cats = Object.keys(post.categories);
-                    cats.splice(cats.indexOf('Projects'));
-                    post.project_type = cats[0];
-
                     // parse json from excerpt
                     var stripped = post.excerpt.replace(/<(?:.|\n)*?>/gm, '').replace(/\&#038;/gm, '&').replace(/\&#\d{4};/gm, '"');
                     // check if excerpt is in json format
