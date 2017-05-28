@@ -64,6 +64,7 @@ function Controller($scope, Wordpress, $location, $sce) {
 
     //check if a particular project should be shown if a tag is selected
     $scope.show = project => {
+        console.log('test');
         if($scope.display){
             // get keys from tag object
             tagKeys = _.keys(project.tags);

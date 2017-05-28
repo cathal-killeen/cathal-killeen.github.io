@@ -23,12 +23,12 @@
         <!-- Standard Bootstrap ul.nav-pills -->
         <ul class="nav nav-pills" role="tablist">
         <li ng-show="display">
-          <a class="btn btn-xl btn-demo tab-btn" style="background-color:#FEC503;border-color:#FEC503;" href="/?projects" role="pill" data-toggle="pill">
+          <a class="btn btn-xl btn-demo tab-btn" style="background-color:#FEC503;border-color:#FEC503;" href="/?projects" role="pill">
               All Projects <i class="fa fa-arrow-right"></i>
           </a>
         </li>
           <li ng-class="{ 'active': tab.active, 'disabled': tab.disabled }" ng-repeat="tab in links" ng-hide="display === tab.id">
-            <a class="btn btn-xl btn-demo tab-btn" ng-href="/?projects={{tab.id}}" role="pill" data-toggle="pill" ng-style="{'background-color':tab.color, 'border-color':tab.color}">
+    <a class="btn btn-xl btn-demo tab-btn" ng-href="{{'/?projects='+tab.id}}" role="pill" ng-style="{'background-color':tab.color, 'border-color':tab.color}">
                 {{tab.title}} <i class="fa fa-arrow-right"></i>
             </a>
           </li>
