@@ -19,6 +19,10 @@
                         </div>
                         <div class="timeline-body">
                             <p class="text-muted">{{item.description}}</p>
+                            <br>
+                            <a ng-show="item.cta" class="btn btn-xl btn-demo tab-btn" ng-href="{{item.cta.link}}" ng-style="{'background-color':item.cta.color, 'border-color':item.cta.color}">
+                                {{item.cta.title}} <i class="fa fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 </li>

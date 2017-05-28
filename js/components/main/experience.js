@@ -21,7 +21,12 @@ var experience = [
         time: "2014-2018",
         title: "University College Dublin",
         description: "After sitting my Leaving Certificate in June 2014, I began studying Computer Science at UCD the following August.",
-        image_url: "/img/experience/ucd.gif"
+        image_url: "/img/experience/ucd.gif",
+        cta: {
+            title: 'View UCD Projects',
+            link: '/?projects=ucd',
+            color: '#003366'
+        }
     },
     {
         time: "2014-2016",
@@ -33,7 +38,12 @@ var experience = [
         time: "November 2014",
         title: "My First Hackathon",
         description: "In November 2014, I attended my first hackathon, Science Hack Day Dublin. It was a 24 hour event and I worked on 2 different projects/teams over the weekend. The first was a video call doorbell/ electronic door lock activated via a mobile app. The second was a skills based freelance website for students, which I ended up pitching to the judges. The doorbell project was the overall winner of the event.",
-        image_url: "/img/experience/shd.jpg"
+        image_url: "/img/experience/shd.jpg",
+        cta: {
+            title: 'View Hackathon Projects',
+            link: '/?projects=hackathon',
+            color: '#68A052'
+        }
     },
     {
         time: "Summer 2015",
@@ -57,6 +67,11 @@ var experience = [
         time: "November 2016 - May 2017",
         title: "HackCU",
         description: "During the year I spent at Boulder, I became involved with HackCU, which is an intercollegiate Hackathon organized entirely by students at the university. Throughout the year, I helped organize events on campus including the flagship event HackCU, which saw over 400 attendees in 2017. I led the web development team that built the landing page and LIVE page for HackCU III.",
-        image_url: "/img/experience/hackcu.jpg"
+        image_url: "/img/experience/hackcu.jpg",
+        cta: {
+            title: 'HackCU Site',
+            link: 'http://2017.hackcu.org',
+            color: '#F69C33'
+        }
     }
 ];
