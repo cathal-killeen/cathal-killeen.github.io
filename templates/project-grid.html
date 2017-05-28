@@ -1,3 +1,5 @@
+
+
 <div class="container">
     <div class="row" ng-hide="display" style="margin: 50px 0 0 0;">
         <div class="col-lg-12 text-center">
@@ -5,10 +7,7 @@
             <h3 class="section-subheading text-muted">Software projects that I have worked on, including personal, college and client projects.</h3>
         </div>
     </div>
-    <div class="row" style="margin-bottom:100px;" ng-show="display">
-        <div class="col-xs-offset-1" >
-            <a href="/?projects"><h4><i class="fa fa-hand-o-left" style="margin-right:8px;font-size:120%"></i>All Projects</h4></a>
-        </div>
+    <div class="row" style="margin-bottom:60px;" ng-show="display">
         <div class="row" style="margin-top:20px">
             <div class="col-md-3 col-md-offset-1 text-center">
                 <img ng-src="{{info.image}}" style="height:150px;width:150px;">
@@ -20,15 +19,20 @@
         </div>
     </div>
 
-    <div scrolling-tabs-wrapper>
-
-            <!-- Standard Bootstrap ul.nav-pills -->
-            <ul class="nav nav-pills" role="tablist">
-              <li ng-class="{ 'active': tab.active, 'disabled': tab.disabled }" ng-repeat="tab in main.uc3Pills">
-                <a ng-href="{{'#' + tab.paneId}}" role="pill" data-toggle="pill">{{tab.title}}</a>
-              </li>
-            </ul>
-
+    <div scrolling-tabs-wrapper style="margin-bottom:70px;">
+        <!-- Standard Bootstrap ul.nav-pills -->
+        <ul class="nav nav-pills" role="tablist">
+        <li ng-show="display">
+          <a class="btn btn-xl btn-demo tab-btn" style="background-color:#FEC503;border-color:#FEC503;" href="/?projects" role="pill" data-toggle="pill">
+              All Projects <i class="fa fa-arrow-right"></i>
+          </a>
+        </li>
+          <li ng-class="{ 'active': tab.active, 'disabled': tab.disabled }" ng-repeat="tab in links" ng-hide="display === tab.id">
+            <a class="btn btn-xl btn-demo tab-btn" ng-href="/?projects={{tab.id}}" role="pill" data-toggle="pill" ng-style="{'background-color':tab.color, 'border-color':tab.color}">
+                {{tab.title}} <i class="fa fa-arrow-right"></i>
+            </a>
+          </li>
+        </ul>
     </div>
 
     <div class="col-lg-12 text-center" ng-show="loading">
@@ -52,3 +56,14 @@
         </div>
     </div>
 </div>
+
+<style>
+.scrtabs-tab-scroll-arrow {
+    border: none;
+}
+.tab-btn {
+    margin: 0 5px 0 5px !important;
+    padding: 9px 15px !important;
+}
+
+</style>

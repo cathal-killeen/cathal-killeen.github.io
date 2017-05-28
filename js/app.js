@@ -7,7 +7,8 @@ var app = angular.module('app', [
     'duScroll',
     'ui.router',
     'angularMoment',
-    'angular-google-analytics'
+    'angular-google-analytics',
+    'mj.scrollingTabs'
 ])
 .config(function($locationProvider, $routeProvider, AnalyticsProvider) {
     $locationProvider.html5Mode(true);
