@@ -8,7 +8,7 @@ function Controller($scope, Wordpress) {
     $scope.loading = true;
     Wordpress.getBlogPosts().then(posts => {
         $scope.blogPosts = posts;
-        console.log($scope.blogPosts);
+        //console.log($scope.blogPosts);
         $scope.loading = false;
         $scope.$apply();
     });

@@ -11,7 +11,7 @@ function Controller($scope, Wordpress) {
 
     Wordpress.getHomeProjects().then(function(home_projects){
         $scope.home_projects = home_projects;
-        console.log($scope.home_projects);
+        //console.log($scope.home_projects);
         $scope.loading = false;
         $scope.$apply();
     });

@@ -10,7 +10,7 @@ function Controller($scope, Wordpress) {
 
     Wordpress.getBlogPosts().then(posts => {
         $scope.blogPosts = posts.slice(0,3);
-        console.log($scope.blogPosts);
+        //console.log($scope.blogPosts);
         $scope.loading = false;
         $scope.$apply();
     });

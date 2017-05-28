@@ -8,7 +8,7 @@ function Controller($scope, Wordpress, $location) {
     $scope.loading = true;
     Wordpress.getBySlug($location.search().project).then(function(project){
         $scope.project = project;
-        console.log($scope.project);
+        //console.log($scope.project);
         $scope.loading = false;
         $scope.$apply();
     });
